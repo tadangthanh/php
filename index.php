@@ -1,2 +1,3 @@
 <?php
-    echo "ok";
+echo "ok";
+include('test.php');

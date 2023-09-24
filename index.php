@@ -1,3 +1,3 @@
 <?php
-echo "ok";
+echo "ok vãi lồn luôn";
 include('test.php');

@@ -2,12 +2,11 @@
 class News
 {
     private $id;
-    private $category;
+    private $category_id;
     private $content;
-    private $img_url;
     private $publish_date;
     private $title;
-    private $author;
+    private $user_id;
 
     public function getId()
     {
@@ -19,14 +18,14 @@ class News
         $this->id = $id;
     }
 
-    public function getCategory()
+    public function getCategoryId()
     {
-        return $this->category;
+        return $this->category_id;
     }
 
-    public function setCategory($category)
+    public function setCategoryId($category_id)
     {
-        $this->category = $category;
+        $this->category_id = $category_id;
     }
 
     public function getContent()
@@ -39,15 +38,6 @@ class News
         $this->content = $content;
     }
 
-    public function getImgUrl()
-    {
-        return $this->img_url;
-    }
-
-    public function setImgUrl($img_url)
-    {
-        $this->img_url = $img_url;
-    }
 
     public function getPublishDate()
     {
@@ -69,13 +59,13 @@ class News
         $this->title = $title;
     }
 
-    public function getAuthor()
+    public function getUserId()
     {
-        return $this->author;
+        return $this->user_id;
     }
 
-    public function setAuthor($author)
+    public function setUserId($user_id)
     {
-        $this->author = $author;
+        $this->user_id = $user_id;
     }
 }

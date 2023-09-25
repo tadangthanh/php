@@ -6,7 +6,7 @@ class User
     private $username;
     private $email;
     private $password;
-    private Role $role;
+    private $role_id;
     private $created_at;
 
     public function getId()
@@ -18,14 +18,17 @@ class User
     {
         $this->id = $id;
     }
+
     public function getUsername()
     {
         return $this->username;
     }
+
     public function setUsername($username)
     {
         $this->username = $username;
     }
+
     public function getEmail()
     {
         return $this->email;
@@ -35,25 +38,27 @@ class User
     {
         $this->email = $email;
     }
+
     public function getPassword()
     {
         return $this->password;
     }
+
     public function setPassword($password)
     {
         $this->password = $password;
     }
 
-
-    public  function getRole()
+    public function getRoleId()
     {
-        return $this->role;
+        return $this->role_id;
     }
 
-    public function setRole(Role $role)
+    public function setRoleId($role_id)
     {
-        $this->role = $role;
+        $this->role_id = $role_id;
     }
+
     public function getCreatedAt()
     {
         return $this->created_at;

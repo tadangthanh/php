@@ -2,12 +2,13 @@
 class News
 {
     private $id;
-    private Categories $category;
+    private $category;
     private $content;
     private $img_url;
     private $publish_date;
     private $title;
-    private Author $author;
+    private $author;
+
     public function getId()
     {
         return $this->id;
@@ -23,7 +24,7 @@ class News
         return $this->category;
     }
 
-    public function setCategory(Categories $category)
+    public function setCategory($category)
     {
         $this->category = $category;
     }
@@ -73,7 +74,7 @@ class News
         return $this->author;
     }
 
-    public function setAuthor(Author $author)
+    public function setAuthor($author)
     {
         $this->author = $author;
     }

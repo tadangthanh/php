@@ -26,6 +26,33 @@ class NewsDAO
         }
         return $newsList;
     }
+    public function paging($limit, $offset)
+    {
+        $newsList = array();
+        $conn = Connect::getConnection();
+        $sqlQuery = "select n.title,n.id,n.content,c.id as cid,n.publish_date,u.id as uid from News as n inner join users as u on n.user_id=u.id inner join categories as c on c.id=n.category_id order by n.id asc limit " . $limit . " offset " . $offset;
+        $result = mysqli_query($conn, $sqlQuery);
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_array($result)) {
+                $news = new News();
+                $news->setId($row["id"]);
+                $news->setContent($row["content"]);
+                $news->setTitle($row["title"]);
+                $news->setPublishDate($row["publish_date"]);
+                $news->setUserId($row["uid"]);
+                $news->setCategoryId($row['cid']);
+                array_push($newsList, $news);
+            }
+        }
+        return $newsList;
+    }
+    public function count()
+    {
+        $conn = Connect::getConnection();
+        $sqlQuery = "select count(*) from news";
+        $result = mysqli_query($conn, $sqlQuery);
+        return mysqli_fetch_array($result)[0];
+    }
     public function update(News $news)
     {
         $conn = Connect::getConnection();

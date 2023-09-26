@@ -11,8 +11,11 @@
 <?php
 $pathCategoryDAO = __DIR__ . "\..\DAO\CategoryDAO.php";
 $pathNewsDAO = __DIR__ . "\..\DAO\NewsDAO.php";
+$pathUserDAO = __DIR__ . "\..\DAO\UserDAO.php";
 include $pathNewsDAO;
 include $pathCategoryDAO;
+include $pathUserDAO;
+$userDAO = new UserDAO();
 $newsDAO = new NewsDAO();
 $categoryDAO = new CategoriesDAO();
 $id = $_REQUEST['id'];
@@ -52,7 +55,7 @@ $listCategory = $categoryDAO->getAll();
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Người tạo:</label>
-                <input type="text" name="user_id" value="<?php echo $news->getUserId(); ?>" readonly>
+                <input type="text" name="user_id" value="<?php echo $userDAO->getById($news->getUserId())->getUsername(); ?>" readonly>
             </div>
             <input type="submit" value="cập nhật" name="update">
             <button><a href="../xulyform/delete-news.php?id=<?php echo $news->getId(); ?>">Xóa</a></button>

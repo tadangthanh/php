@@ -5,6 +5,7 @@ include_once $pathConnection;
 include_once $pathRoleModel;
 class RoleDAO
 {
+
     public function getAll()
     {
         $roles = array();

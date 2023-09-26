@@ -7,8 +7,7 @@ $news = new News();
 $news->setTitle($_POST["title"]);
 $news->setCategoryId($_POST["category"]);
 $news->setContent($_POST["content"]);
-$news->setUserId(2);
-// $user_id = $_SESSION("user")->getId();
+$news->setUserId($_SESSION['id']);
 if ($newsDAO->save($news)) {
     header("Location: ../index.php");
 }

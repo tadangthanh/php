@@ -6,6 +6,7 @@ include $pathRoleDAO;
 $userDAO = new UserDAO();
 $roleDAO = new RoleDAO();
 $listRole = $roleDAO->getAll();
+// login
 if (isset($_REQUEST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -20,8 +21,10 @@ if (isset($_REQUEST['login'])) {
                 $_SESSION['role'] = $role->getName();
             }
         }
+        $_SESSION['id'] = $user->getId();
         $_SESSION['username'] = $user->getUsername();
     }
+    // register
 } else if (isset($_REQUEST['register'])) {
     $username = $_POST['username'];
     $user = new User();

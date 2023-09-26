@@ -6,8 +6,30 @@ session_start();
 //     header("Location: views/login.php?permission=Bạn không có quyền truy cập vào tài nguyên này!");
 // }
 include_once('DAO/NewsDAO.php');
+include_once('DAO/CategoryDAO.php');
+include_once('DAO/UserDAO.php');
+$categoryDAO = new CategoriesDAO();
+$listCategory = $categoryDAO->getAll();
+$userDAO = new UserDAO();
 $dao = new NewsDAO();
-$newsList = $dao->getAll();
+// tổng số item
+$totalItem = $dao->count();
+// tổng số trang
+$limit = isset($_REQUEST['limit']) ? $_REQUEST['limit'] : 5;
+$sumOfPage = round($totalItem / $limit) + 1;
+$numPage = isset($_REQUEST['offset']) ? $_REQUEST['offset'] : 0;
+$offset = ($numPage - 1) * $limit;
+$newsList = $dao->paging($limit, $offset);
+function getCategoryNameById($id, $listCategory)
+{
+    foreach ($listCategory as $c) {
+        if ($c->getId() == $id) {
+            return $c->getName();
+        }
+    }
+    return "";
+}
+
 ?>
 
 <head>
@@ -19,7 +41,11 @@ $newsList = $dao->getAll();
     <meta name="author" content="">
 
     <title>Trang chủ - Admin</title>
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Latest compiled JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom fonts for this template-->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -42,7 +68,6 @@ $newsList = $dao->getAll();
         white-space: nowrap;
         text-overflow: ellipsis;
         max-width: 150px;
-        /* Đặt kích thước tối đa của cột */
     }
 </style>
 
@@ -351,7 +376,7 @@ $newsList = $dao->getAll();
                                                 Số bài viết</div>
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                                 <?php
-                                                echo count($newsList);
+                                                echo $totalItem;
                                                 ?>
                                             </div>
                                         </div>
@@ -370,8 +395,8 @@ $newsList = $dao->getAll();
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                                Số user</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $userDAO->count() ?></div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -382,7 +407,10 @@ $newsList = $dao->getAll();
                         </div>
 
                     </div>
-                    <a href="views/them-moi.php" class="btn btn-primary mb-3">Thêm bài viết mới</a>
+                    <div class="d-flex align-items-center">
+                        <a href="views/them-moi.php" class="btn btn-primary mb-3 mr-5">Thêm bài viết mới</a>
+
+                    </div>
                     <!--table  -->
                     <table class="table">
                         <thead>
@@ -402,10 +430,10 @@ $newsList = $dao->getAll();
                                 "
                                     <tr>
                                         <td>" . $n->getTitle() . "</td>
-                                        <td>" . $n->getContent() . "</td>
-                                        <td>" . $n->getCategoryId() . "</td>
+                                        <td >" . $n->getContent() . "</td>
+                                        <td>" . getCategoryNameById($n->getCategoryId(), $listCategory) . "</td>
                                         <td>" . $n->getPublishDate() . "</td>
-                                        <td>" . $n->getUserId() . "</td>
+                                        <td>" . $userDAO->getById($n->getUserId())->getUsername() . "</td>
                                         <td><a href=\"views/detail.php?id=" . $n->getId() . "\">xem chi tiết</a> </td>
                                     </tr> 
                                 ";
@@ -414,12 +442,40 @@ $newsList = $dao->getAll();
 
                         </tbody>
                     </table>
-
+                    <select id="offset" name="offset">
+                        <?php
+                        for ($i = 1; $i <= $sumOfPage; $i++) {
+                            if ($numPage == $i) {
+                                echo "<option selected value=\"index.php?offset=" . $i . "\">Trang " . $i . "</option>";
+                            } else {
+                                echo "<option value=\"index.php?offset=" . $i    . "\">Trang " . $i . "</option>";
+                            }
+                        }
+                        ?>
+                    </select>
+                    Số bản ghi:
+                    <select class="ml-2" id="limit" name="limit">
+                        <option <?php if ($limit == 2) {
+                                    echo "selected";
+                                } ?> value="2">2</option>
+                        <option <?php if ($limit == 5) {
+                                    echo "selected";
+                                } ?> value="5">5</option>
+                        <option <?php if ($limit == 10) {
+                                    echo "selected";
+                                } ?> value="10">10</option>
+                        <option <?php if ($limit == 15) {
+                                    echo "selected";
+                                } ?> value="15">15</option>
+                        <option <?php if ($limit == 20) {
+                                    echo "selected";
+                                } ?> value="20">20</option>
+                    </select>
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
+
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
@@ -429,8 +485,6 @@ $newsList = $dao->getAll();
                     </div>
                 </div>
             </footer>
-            <!-- End of Footer -->
-
         </div>
         <!-- End of Content Wrapper -->
 
@@ -443,7 +497,22 @@ $newsList = $dao->getAll();
     </a>
 
 
-
+    <script>
+        document.getElementById("offset").addEventListener("change", function() {
+            var limit = document.getElementById('limit').value;
+            var selectedValue = this.value += "&limit=" + limit;
+            if (selectedValue !== "") {
+                window.location.href = selectedValue;
+            }
+        });
+        document.getElementById("limit").addEventListener("change", function() {
+            var limit = document.getElementById('offset').value;
+            var selectedValue = limit + "&limit=" + this.value;
+            if (selectedValue !== "") {
+                window.location.href = selectedValue;
+            }
+        });
+    </script>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

@@ -2,9 +2,9 @@
 <html lang="en">
 <?php
 session_start();
-// if ($_SESSION['role'] !== "ADMIN") {
-//     header("Location: views/login.php?permission=Bạn không có quyền truy cập vào tài nguyên này!");
-// }
+if ($_SESSION['role'] !== "ADMIN") {
+    header("Location: views/login.php?permission=Bạn không có quyền truy cập vào tài nguyên này!");
+}
 include_once('DAO/NewsDAO.php');
 include_once('DAO/CategoryDAO.php');
 include_once('DAO/UserDAO.php');

@@ -13,5 +13,5 @@ $news->setCategoryId($_POST['category']);
 $news->setUserId($_POST['user_id']);
 
 if ($newsDAO->update($news)) {
-    header("Location: ../index.php");
+    header("Location: ../index.php?offset=1&limit=2");
 }

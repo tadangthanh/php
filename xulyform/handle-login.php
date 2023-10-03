@@ -23,7 +23,9 @@ if (isset($_REQUEST['login'])) {
         }
         $_SESSION['id'] = $user->getId();
         $_SESSION['username'] = $user->getUsername();
+        header("Location: ../views/index.php?offset=1&limit=2");
     }
+
     // register
 } else if (isset($_REQUEST['register'])) {
     $username = $_POST['username'];

@@ -10,6 +10,7 @@ class NewsDAO
     {
         $newsList = array();
         $conn = Connect::getConnection();
+
         $sqlQuery = "select n.title,n.id,n.content,c.id as cid,n.publish_date,u.id as uid from News as n inner join users as u on n.user_id=u.id inner join categories as c on c.id=n.category_id";
         $result = mysqli_query($conn, $sqlQuery);
         if (mysqli_num_rows($result) > 0) {
@@ -26,11 +27,12 @@ class NewsDAO
         }
         return $newsList;
     }
-    public function paging($limit, $offset)
+
+    public function paging($limit, $offset, $search)
     {
         $newsList = array();
         $conn = Connect::getConnection();
-        $sqlQuery = "select n.title,n.id,n.content,c.id as cid,n.publish_date,u.id as uid from News as n inner join users as u on n.user_id=u.id inner join categories as c on c.id=n.category_id order by n.id asc limit " . $limit . " offset " . $offset;
+        $sqlQuery = "select n.title,n.id,n.content,c.id as cid,n.publish_date,u.id as uid,u.username from News as n inner join users as u on n.user_id=u.id inner join categories as c on c.id=n.category_id where n.title like '%$search%' or n.content like '%$search%' or u.username like '%$search%' order by n.id asc limit " . $limit . " offset " . $offset;
         $result = mysqli_query($conn, $sqlQuery);
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_array($result)) {

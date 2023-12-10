@@ -9,6 +9,13 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
 </head>
 <?php
+include '../public.php';
+ if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+if($_SESSION['role']!="ADMIN" &&$_SESSION['role']!="MANAGER"){
+    header("Location: login.php?err=vui lòng đăng nhập!");
+}
 $pathCategoryDAO = __DIR__ . "\..\DAO\CategoryDAO.php";
 $pathNewsDAO = __DIR__ . "\..\DAO\NewsDAO.php";
 $pathUserDAO = __DIR__ . "\..\DAO\UserDAO.php";

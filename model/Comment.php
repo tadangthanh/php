@@ -4,55 +4,66 @@ class Comment
     private $id;
     private $comment_date;
     private $content;
-    private User $user;
-    private News $news;
+    private $user_id;
+    private $news_id;
+
+    // Getter cho thuộc tính $id
     public function getId()
     {
         return $this->id;
     }
 
+    // Setter cho thuộc tính $id
     public function setId($id)
     {
         $this->id = $id;
     }
 
+    // Getter cho thuộc tính $comment_date
     public function getCommentDate()
     {
         return $this->comment_date;
     }
 
+    // Setter cho thuộc tính $comment_date
     public function setCommentDate($comment_date)
     {
         $this->comment_date = $comment_date;
     }
 
+    // Getter cho thuộc tính $content
     public function getContent()
     {
         return $this->content;
     }
 
+    // Setter cho thuộc tính $content
     public function setContent($content)
     {
         $this->content = $content;
     }
 
-    public function getUser()
+    // Getter cho thuộc tính $user_id
+    public function getUserId()
     {
-        return $this->user;
+        return $this->user_id;
     }
 
-    public function setUser(User $user)
+    // Setter cho thuộc tính $user_id
+    public function setUserId($user_id)
     {
-        $this->user = $user;
+        $this->user_id = $user_id;
     }
 
-    public function getNews()
+    // Getter cho thuộc tính $news_id
+    public function getNewsId()
     {
-        return $this->news;
+        return $this->news_id;
     }
 
-    public function setNews(News $news)
+    // Setter cho thuộc tính $news_id
+    public function setNewsId($news_id)
     {
-        $this->news = $news;
+        $this->news_id = $news_id;
     }
 }

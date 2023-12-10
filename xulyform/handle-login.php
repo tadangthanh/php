@@ -4,7 +4,7 @@ $pathRoleDAO = __DIR__ . "\..\DAO\RoleDAO.php";
 include $pathUserDAO;
 include $pathRoleDAO;
 $userDAO = new UserDAO();
-$roleDAO = new RoleDAO();
+$roleDAO = new RoleDAO(); 
 $listRole = $roleDAO->getAll();
 // login
 if (isset($_REQUEST['login'])) {
@@ -21,9 +21,11 @@ if (isset($_REQUEST['login'])) {
                 $_SESSION['role'] = $role->getName();
             }
         }
+        $_SESSION['email']=$user->getEmail();
+        $_SESSION['created_at']=$user->getCreatedAt();
         $_SESSION['id'] = $user->getId();
         $_SESSION['username'] = $user->getUsername();
-        header("Location: ../views/index.php?offset=1&limit=2");
+        header("Location: ../views/home-news.php?offset=1&limit=2");
     }
 
     // register

@@ -89,4 +89,30 @@ class NewsDAO
         $result = mysqli_query($conn, $sqlQuery);
         return $result;
     }
+    public function getNewsByUserId($userId){
+        $newsList = array();
+        $conn = Connect::getConnection();
+
+        $sqlQuery = "select n.title,n.id,n.content,c.id as cid,n.publish_date,u.id as uid from News as n inner join users as u on n.user_id=u.id inner join categories as c on c.id=n.category_id where user_id='".$userId."'";
+        $result = mysqli_query($conn, $sqlQuery);
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_array($result)) {
+                $news = new News();
+                $news->setId($row["id"]);
+                $news->setContent($row["content"]);
+                $news->setTitle($row["title"]);
+                $news->setPublishDate($row["publish_date"]);
+                $news->setUserId($row["uid"]);
+                $news->setCategoryId($row['cid']);
+                array_push($newsList, $news);
+            }
+        }
+        return $newsList;
+    }
+    public function deleteNewsById($id){
+        $conn = Connect::getConnection();
+        $sqlQuery = "delete from news where id=$id";
+        $result = mysqli_query($conn, $sqlQuery);
+        return $result;
+    }
 }

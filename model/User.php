@@ -8,12 +8,20 @@ class User
     private $password;
     private $role_id;
     private $created_at;
+    private $status;
 
     public function getId()
     {
         return $this->id;
     }
-
+    public function getStatus()
+    {
+        return $this->status;
+    }
+    public function setStatus($status)
+    {
+        return $this->status = $status;
+    }
     public function setId($id)
     {
         $this->id = $id;

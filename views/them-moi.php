@@ -13,6 +13,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <?php
+include '../public.php';
+if (session_status() == PHP_SESSION_NONE) {
+   session_start();
+}
+if($_SESSION['role']!="ADMIN" &&$_SESSION['role']!="MANAGER"&&$_SESSION['role']!="USER"){
+   header("Location: login.php?err=vui lòng đăng nhập!");
+}
 $pathCategoryDAO = __DIR__ . "\..\DAO\CategoryDAO.php";
 $pathNewsDAO = __DIR__ . "\..\DAO\NewsDAO.php";
 include $pathNewsDAO;

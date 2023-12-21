@@ -14,7 +14,7 @@ if (isset($_REQUEST['update'])) {
         $result = $userDAO->updateEmailPasswordByUsername($username,$email,$password);
         if($result!==null){
             $_SESSION['email']=$email;   
-            header("Location: ../public.php?success=info_updated");
+            header("Location: ../views/home-news.php?offset=1&limit=2");
         }
     }else{
         header("Location: ../views/profile.php?error=password");

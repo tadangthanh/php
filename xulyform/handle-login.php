@@ -42,13 +42,7 @@ if (isset($_REQUEST['login'])) {
         $user->setPassword($_POST['password']);
         $user->setEmail($_POST['email']);
         if ($userDAO->save($user)) {
-            session_start();
-            $_SESSION['username'] = $user->getUsername();
-            foreach ($listRole as $role) {
-                if ($user->getRoleId() == $role->getId()) {
-                    $_SESSION['role'] = $role->getName();
-                }
-            }
+            header("Location: ../views/login.php?err=Đăng ký thành công");
         }
     }
 }

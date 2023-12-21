@@ -17,8 +17,8 @@ include '../public.php';
 if (session_status() == PHP_SESSION_NONE) {
    session_start();
 }
-if($_SESSION['role']!="ADMIN" &&$_SESSION['role']!="MANAGER"&&$_SESSION['role']!="USER"){
-   header("Location: login.php?err=vui lòng đăng nhập!");
+if($_SESSION['role']!="ADMIN"){
+   header("Location: login.php?err=Bạn không phải admin!");
 }
 $pathCategoryDAO = __DIR__ . "\..\DAO\CategoryDAO.php";
 $pathNewsDAO = __DIR__ . "\..\DAO\NewsDAO.php";
@@ -34,7 +34,9 @@ $listCategory = $categoryDAO->getAll();
         <form action="../xulyform/create-news.php" method="post">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control" id="title" name="title">
+                <!-- <input type="text" class="form-control" id="title" name="title"> -->
+                <textarea name="title" id="title" style="height: 100px;"></textarea>
+
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Content:</label>
@@ -58,6 +60,14 @@ $listCategory = $categoryDAO->getAll();
 <script>
     ClassicEditor
         .create(document.querySelector('#content'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+        ClassicEditor
+        .create(document.querySelector('#title'))
         .then(editor => {
             console.log(editor);
         })

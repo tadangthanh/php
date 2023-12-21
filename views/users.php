@@ -4,7 +4,7 @@
     session_start();
 }
 if($_SESSION['role']!="ADMIN"){
-    header("Location: ../views/login.php?err=bạn ko có quyền truy cập!");
+    header("Location: ../views/login.php?err=Bạn không phải là admin!");
 }
 $pathUserDAO = __DIR__ . "\..\DAO\UserDAO.php";
 $pathRoleDAO = __DIR__ . "\..\DAO\RoleDAO.php";

@@ -11,7 +11,7 @@
    if (session_status() == PHP_SESSION_NONE) {
       session_start();
   }
-  if($_SESSION['role']!="ADMIN" &&$_SESSION['role']!="MANAGER"&&$_SESSION['role']!="USER"){
+  if($_SESSION['role']!="ADMIN"&&$_SESSION['role']!="USER"){
       header("Location: login.php?err=vui lòng đăng nhập!");
   }
   $pathUserDAO = __DIR__ . "\..\DAO\UserDAO.php";
@@ -47,24 +47,24 @@ function getCategoryNameById($id, $listCategory)
 }
 ?>
 <style>
-.content {
-    display: -webkit-box;
-  -webkit-line-clamp: 2; /* Số dòng muốn hiển thị */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  background: white;
+
+.card-text{
+    display: block;
+  	display: -webkit-box;
+  	height: 16px*1.3*3;
+  	font-size: 16px;
+  	line-height: 1.3;
+  	-webkit-line-clamp: 3;  /* số dòng hiển thị */
+  	-webkit-box-orient: vertical;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+  	margin-top:10px;
 }
+.input-group{
 
-.content::after {
-  /* Tạo dấu chấm bằng cách sử dụng một phần tử ::after */
-  content: '...';
-  position: absolute;
-  bottom: 0; /* Đặt dấu chấm ở phía dưới */
-  right: 0;
-  background: white; /* Màu nền giống với màu nền của phần tử */
+    border:1px solid black;
+
 }
-
-
 </style>
 <body>
 <div class="container"> 
@@ -85,11 +85,11 @@ function getCategoryNameById($id, $listCategory)
         <div class="row">
         <div class="mt-1 mb-1">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex  justify-content-between" >
                     <h5 class="card-title">'.$n->getTitle().'</h5>
                 </div>
                 <div class="card-body content" >
-                    <p class="card-text">'.$n->getContent().'</p>
+                    <div class="card-text">'.$n->getContent().'</div>
                 </div>
                 <div class="card-footer text-muted text-end d-flex" style="justify-content: space-between;">
                 <span>

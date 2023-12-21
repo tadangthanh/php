@@ -13,7 +13,7 @@ include '../public.php';
  if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-if($_SESSION['role']!="ADMIN" &&$_SESSION['role']!="MANAGER"){
+if($_SESSION['role']!="ADMIN"){
     header("Location: login.php?err=vui lòng đăng nhập!");
 }
 $pathCategoryDAO = __DIR__ . "\..\DAO\CategoryDAO.php";

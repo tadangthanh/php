@@ -79,9 +79,9 @@ display: block;
         <!-- Navbar items -->
         <div class="collapse navbar-collapse d-flex" id="navbarNav" style="justify-content: space-between;">
             <ul class="navbar-nav">
-                 <li class="nav-item">
+                 <!-- <li class="nav-item">
                     <a class="nav-link" href="<?php echo $baseUrlPostNews; ?>">Đăng bài</a>
-                </li>
+                </li> -->
                 <?php 
                     if($_SESSION['role']=="ADMIN"){
                         echo '

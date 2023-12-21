@@ -10,7 +10,9 @@
 </head>
 <?php
 session_start();
-
+if($_SESSION['role']!="ADMIN"&&$_SESSION['role']!="USER"){
+    header("Location: login.php?err=vui lòng đăng nhập!");
+}
 ?>
 <body>
     <div class="profile-container">

@@ -66,7 +66,7 @@ class UserDAO
     public function save(User $user)
     {
         $conn = Connect::getConnection();
-        $sqlQuery = "insert into users (created_at, email, password, role_id, username) VALUES ('" . date("Y-m-d") . "','" . $user->getEmail() . "','" . $user->getPassword() . "',1,'" . $user->getUsername() . "')";
+        $sqlQuery = "insert into users (created_at, email, password, role_id, username,status) VALUES ('" . date("Y-m-d") . "','" . $user->getEmail() . "','" . $user->getPassword() . "',2,'" . $user->getUsername() . "',1)";
         $result = mysqli_query($conn, $sqlQuery);
         return $result;
     }

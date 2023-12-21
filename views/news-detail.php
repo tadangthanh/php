@@ -12,7 +12,7 @@
   if (session_status() == PHP_SESSION_NONE) {
      session_start();
  }
- if($_SESSION['role']!="ADMIN" &&$_SESSION['role']!="MANAGER"&&$_SESSION['role']!="USER"){
+ if($_SESSION['role']!="ADMIN"&&$_SESSION['role']!="USER"){
      header("Location: login.php?err=vui lòng đăng nhập!");
  }
  $pathUserDAO = __DIR__ . "\..\DAO\UserDAO.php";
@@ -54,6 +54,11 @@
       <div class="card">
         <div class="card-header">
           <h1 class="card-title"><?php echo $news->getTitle(); ?></h1>
+          <?php
+            if($_SESSION['role']=="ADMIN"){
+              echo '<a href="../xulyform/delete-news.php?id=<?php echo $news->getId() ?>&fowarde=home">xóa bài viết này</a>';
+            }
+          ?>
         </div>
         <div class="card-body">
           <p class="card-text"><?php echo $news->getContent(); ?></p>

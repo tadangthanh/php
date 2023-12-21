@@ -9,5 +9,10 @@ $commentDAO = new CommentDAO();
 $commentDAO->deleteByNewsId($_GET['id']);
 $result =$newsDAO->deleteNewsById($_GET['id']);
 if($result){
-    header("Location: ../views/home-news.php?offset=1&limit=2");
+    if(isset($_GET['fowarde'])){
+        header("Location: ../views/home-news.php?offset=1&limit=2");
+    }
+    else {
+        header("Location: ../index.php?offset=1&limit=2");
+    }
 }

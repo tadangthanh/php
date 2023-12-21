@@ -16,6 +16,12 @@
 </head>
 
 <?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+ }
+ if($_SESSION['role']!="ADMIN"&&$_SESSION['role']!="USER"){
+    header("Location: login.php?err=Bạn phải đăng nhập!");
+ }
 $success = isset($_GET['success']) ? $_GET['success'] : '';
 if ($success === 'info_updated') {
     echo '<script>alert("Cập nhật thông tin thành công!");</script>';
